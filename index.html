@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="ctrl">
+    {{username+"  "+password}}
+    <table border="1px">
+        <tr>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>email</th>
+            <th>username</th>
+            <th>password</th>
+        </tr>
+        <tr ng-repeat="x in users">
+            <td>{{x.firstName}}</td>
+            <td>{{x.lastName}}</td>
+            <td>{{x.eMail}}</td>
+            <td>{{x.username}}</td>
+            <td>{{x.password}}</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+app = angular.module('myApp',[]);
+app.controller('ctrl',function ($scope,$http){
+    $scope.username="mahdi";
+    $scope.password="123456789";
+    // $http.get("http://localhost:9000/home/addUser?firstName=hello&lastName=world&email=123&username=harki&password=123")
+
+    $http.get("http://localhost:9000/home/getUser?username="+$scope.username+"&password="+$scope.password)
+        .then(function (response) {$scope.users = response.data;
+            $scope.type = typeof($scope.users);
+        });
+});
+</script>
+
+</body>
+</html>
